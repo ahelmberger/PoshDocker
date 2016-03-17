@@ -15,7 +15,7 @@ function Start-Boot2Docker {
     Write-Host "Starting boot2docker ..." -ForegroundColor Yellow
     & boot2docker start
     Write-Host "Setting environment variables ..." -ForegroundColor Yellow
-    & boot2docker shellinit | % { $_ -replace "^.*(DOCKER_[A-Z_]+)\s*=\s*('|`")?([^']+)('|`")?$", "`$Env:`$1 = '`$3'" } | iex
+    & boot2docker shellinit | % { $_ -replace "^\s*set\s+(DOCKER_[A-Z_]+)\s*=\s*(.*)\s*$", "`$Env:`$1 = '`$2'" } | iex
     & boot2docker ip | % { Write-Host "Docker host is running on IP $_" -ForegroundColor Green }
   }
 }
